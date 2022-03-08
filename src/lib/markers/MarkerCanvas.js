@@ -25,9 +25,9 @@ class MarkerCanvas extends React.Component {
 
   handleMouseMove = evt => {
     if (this.subscription != null) {
-      const { pageX } = evt
+      const { pageX, pageY } = evt
       // FIXME: dont use getBoundingClientRect. Use passed in scroll amount
-      const { left: containerLeft } = this.containerEl.getBoundingClientRect()
+      const { left: containerLeft, top: containerTop } = this.containerEl.getBoundingClientRect()
 
       // number of pixels from left we are on canvas
       // we do this calculation as pageX is based on x from viewport whereas
@@ -35,9 +35,11 @@ class MarkerCanvas extends React.Component {
       // of the viewport.  This calculation is to get how many pixels the cursor
       // is from left of this element
       const canvasX = pageX - containerLeft
+      const canvasY = pageY - containerTop
       const date = this.props.getDateFromLeftOffsetPosition(canvasX)
       this.subscription({
         leftOffset: canvasX,
+        topOffset: canvasY,
         date,
         isCursorOverCanvas: true
       })
