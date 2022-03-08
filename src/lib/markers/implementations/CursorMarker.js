@@ -33,14 +33,16 @@ class CursorMarker extends React.Component {
 
     this.state = {
       leftOffset: 0,
+      topOffset: 0,
       date: 0,
       isShowingCursor: false
     }
   }
 
-  handleCanvasMouseOver = ({ leftOffset, date, isCursorOverCanvas }) => {
+  handleCanvasMouseOver = ({ leftOffset, topOffset, date, isCursorOverCanvas }) => {
     this.setState({
       leftOffset,
+      topOffset,
       date,
       isShowingCursor: isCursorOverCanvas
     })
@@ -60,13 +62,13 @@ class CursorMarker extends React.Component {
   }
 
   render() {
-    const { isShowingCursor, leftOffset, date } = this.state
+    const { isShowingCursor, leftOffset, topOffset, date } = this.state
 
     if (!isShowingCursor) return null
 
     const styles = createMarkerStylesWithLeftOffset(leftOffset)
 
-    return this.props.renderer({ styles, date })
+    return this.props.renderer({ styles, date, topOffset })
   }
 }
 
